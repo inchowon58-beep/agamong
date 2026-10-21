@@ -5,3 +5,4 @@ dist
 .env.*
 scripts/gemini.raw.txt
 .DS_Store
+.vercel
