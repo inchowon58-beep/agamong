@@ -1,0 +1,102 @@
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { BREEDS } from "../src/data/breeds.js";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const outPath = path.join(root, "src", "data", "gemini.json");
+const rawPath = path.join(root, "scripts", "gemini.raw.txt");
+const key = process.env.GEMINI_API_KEY;
+
+if (!key) {
+  console.error("GEMINI_API_KEY가 없습니다.");
+  process.exit(1);
+}
+
+const breedLines = BREEDS.map((breed) => `${breed.slug}: ${breed.ko} (${breed.en})`).join("\n");
+
+const prompt = `당신은 한국 반려동물 분양 브랜드 '포켓몽'의 카피라이터입니다. 다른 업체 문장을 베끼지 말고 새로 쓰세요.
+사실만 사용하세요.
+- 브랜드명 포켓몽, 영문 POCKETMONG
+- 대표 조춘원
+- 전화 0505-464-1004
+- 사업자등록번호 411-88-00358
+- 허가번호 3860000-037-2016-0013
+- 전국 분양. 지점 주소는 없음. 방문 상담은 예약제.
+- 동물병원을 운영하지 않음. 진료 보장, 1위, 최대 규모, 무상 수술 같은 표현 금지.
+- 홈페이지 강아지·고양이 사진은 품종 안내용이며 실재고가 아님.
+
+JSON만 반환하세요. 마크다운 없이.
+스키마:
+{
+  "home": {
+    "title": "줄바꿈은 \\n 하나만",
+    "lead": "2문장",
+    "aboutTitle": "",
+    "aboutLead": "2문장",
+    "choiceLead": "1문장"
+  },
+  "pages": {
+    "greeting": { "title": "", "lead": "", "paragraphs": ["", "", ""] },
+    "company": { "title": "", "lead": "", "paragraphs": ["", ""] },
+    "aftercare": { "lead": "" },
+    "system": { "lead": "" },
+    "delivery": { "lead": "" },
+    "health": { "lead": "" },
+    "overseas": { "lead": "" }
+  },
+  "qna": [ { "q": "", "a": "" } ],
+  "guides": [ { "slug": "first-week|food|toilet|outing", "summary": "", "body": ["", ""] } ],
+  "breedBlurbs": { "slug": "40자 안팎의 품종 한 줄" }
+}
+qna는 8개. guides는 4개 slug를 모두. breedBlurbs는 아래 slug를 모두.
+${breedLines}`;
+
+const models = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-flash-latest"];
+
+async function ask(model) {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": key,
+      },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          responseMimeType: "application/json",
+        },
+      }),
+    },
+  );
+  const body = await response.text();
+  if (!response.ok) {
+    throw new Error(`${model} ${response.status} ${body.slice(0, 400)}`);
+  }
+  const data = JSON.parse(body);
+  const text = data?.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("") || "";
+  if (!text) throw new Error(`${model} 빈 응답`);
+  return text;
+}
+
+let lastError = null;
+for (const model of models) {
+  try {
+    console.log(`try ${model}`);
+    const text = await ask(model);
+    fs.writeFileSync(rawPath, text, "utf8");
+    const parsed = JSON.parse(text);
+    fs.writeFileSync(outPath, JSON.stringify(parsed, null, 2), "utf8");
+    console.log(`saved ${model}`);
+    process.exit(0);
+  } catch (error) {
+    lastError = error;
+    console.error(String(error.message || error).slice(0, 500));
+  }
+}
+
+console.error(lastError);
+process.exit(1);
