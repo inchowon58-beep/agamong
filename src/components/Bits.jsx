@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { NAV, PHONE, content } from "../data/index.js";
+import { NAV, content } from "../data/index.js";
+import { PhoneLink } from "./PhoneLink.jsx";
 
 export function SafeImg({ src, alt, className }) {
   const [failed, setFailed] = useState(false);
@@ -96,7 +97,9 @@ export function ConsultBand() {
     <section className="consult-band">
       <p className="kicker">CONSULT</p>
       <h2>분양 가능한 아이는 전화로 확인합니다</h2>
-      <p>대표번호 {PHONE}. 방문이 필요하면 예약 후 장소를 안내합니다.</p>
+      <p>
+        대표번호 <PhoneLink />. 방문이 필요하면 예약 후 장소를 안내합니다.
+      </p>
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { BannerSlot, ConsultBand, PageHero, SectionNav } from "../components/Bit
 import { PetCard } from "../components/PetCard.jsx";
 import { PhilosophyProse } from "../components/PhilosophyProse.jsx";
 import { usePageTitle } from "../usePageTitle.js";
+import { PhoneLink, TextWithPhone } from "../components/PhoneLink.jsx";
 import { pickRandomReviews } from "../utils/pickReviews.js";
 
 function ReviewsGrid() {
@@ -34,13 +35,19 @@ export function ContentPage({ id }) {
       <PageHero kicker={page.kicker} title={page.title} lead={page.lead} />
       <SectionNav />
       {page.banner ? <BannerSlot {...page.banner} /> : null}
-      {page.paragraphs?.map((paragraph) => <p key={paragraph} className="prose">{paragraph}</p>)}
+      {page.paragraphs?.map((paragraph) => (
+        <p key={paragraph} className="prose">
+          <TextWithPhone text={paragraph} />
+        </p>
+      ))}
       {page.cards ? (
         <div className="info-grid">
           {page.cards.map((card) => (
             <article key={card.title}>
               <h2>{card.title}</h2>
-              <p>{card.body}</p>
+              <p>
+                <TextWithPhone text={card.body} />
+              </p>
             </article>
           ))}
         </div>
@@ -50,7 +57,9 @@ export function ContentPage({ id }) {
           {page.steps.map((step) => (
             <li key={step.title}>
               <h2>{step.title}</h2>
-              <p>{step.body}</p>
+              <p>
+                <TextWithPhone text={step.body} />
+              </p>
             </li>
           ))}
         </ol>
@@ -170,7 +179,11 @@ export function QnA() {
             <button type="button" aria-expanded={open === index} onClick={() => setOpen(open === index ? -1 : index)}>
               {item.q}
             </button>
-            {open === index ? <p>{item.a}</p> : null}
+            {open === index ? (
+              <p>
+                <TextWithPhone text={item.a} />
+              </p>
+            ) : null}
           </article>
         ))}
       </div>
@@ -236,7 +249,15 @@ export function Consult() {
   if (sent) {
     return (
       <section className="page">
-        <PageHero kicker="CONSULT" title="상담 내용을 이 브라우저에 남겼습니다" lead={`이 화면은 개발용 저장입니다. 실제 연결은 대표번호 ${PHONE}로 해주세요.`} />
+        <PageHero
+          kicker="CONSULT"
+          title="상담 내용을 이 브라우저에 남겼습니다"
+          lead={
+            <>
+              이 화면은 개발용 저장입니다. 실제 연결은 대표번호 <PhoneLink />로 해주세요.
+            </>
+          }
+        />
       </section>
     );
   }

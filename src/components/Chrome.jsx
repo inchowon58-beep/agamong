@@ -72,7 +72,9 @@ export function Chrome({ children }) {
       <footer className="site-footer">
         <div className="wrap">
           <p>© {new Date().getFullYear()} 아가몽 · {BUSINESS.nameEn}</p>
-          <p>대표 {BUSINESS.owner} · <a href={PHONE_TEL}>{PHONE}</a></p>
+          <p>
+            대표 {BUSINESS.owner} · <a className="phone-link" href={PHONE_TEL}>{PHONE}</a>
+          </p>
           <p className="site-footer__addr">{BUSINESS.address}</p>
           <FooterSeoLinks />
         </div>

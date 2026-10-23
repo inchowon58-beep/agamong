@@ -4,7 +4,7 @@ export const SITE_TITLE =
   "아가몽 | 인천강아지분양 강아지무료분양 인천고양이분양 인천고양이무료분양";
 
 export const PHONE = "010-4075-5865";
-export const PHONE_TEL = "tel:01040755865";
+export const PHONE_TEL = "tel:+821040755865";
 
 export const BUSINESS = {
   name: "아가몽",
