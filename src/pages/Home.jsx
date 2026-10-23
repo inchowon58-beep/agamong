@@ -72,22 +72,19 @@ export function Home() {
       </section>
 
       <section className="band">
-        <div>
-          <p className="kicker">ABOUT</p>
+        <div className="philosophy-band">
+          <p className="kicker">PHILOSOPHY</p>
           <h2>{home.aboutTitle}</h2>
-        </div>
-        <div className="service-grid">
-          {home.services.map((service) => (
-            <Link key={service.title} to={service.href} className="service-card">
-              <span>{service.kicker}</span>
-              <h3>{service.title}</h3>
-              <p>{service.body}</p>
-              <figure className="service-banner">
-                <img src={service.image} alt="" />
-                <strong>{service.banner}</strong>
-              </figure>
-            </Link>
-          ))}
+          {home.aboutLead ? <p className="band-lead">{home.aboutLead}</p> : null}
+          <div className="philosophy-note">
+            {content.philosophy.map((item) => (
+              <p key={item.slug}>
+                <Link to={`/philosophy/${item.slug}`}>{item.title}</Link>
+                {" — "}
+                {item.teaser}
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -165,37 +162,23 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section split-banner">
-        <div>
-          <p className="kicker">DAILY</p>
-          <h2>읽어 두면 좋은 첫 주</h2>
-          <div className="link-list">
-            {content.guides.map((guide) => (
-              <Link key={guide.slug} to={`/guide/${guide.slug}`}>
-                <strong>{guide.title}</strong>
-                <span>{guide.summary}</span>
-              </Link>
-            ))}
+      <section className="section philosophy-deep">
+        <div className="section-head">
+          <div>
+            <p className="kicker">READ MORE</p>
+            <h2>분양 안내를 자세히</h2>
+            <p className="lead philosophy-deep__lead">건강관리부터 계약, 사후관리, 업체 차이, 안심배송까지. 궁금한 항목을 눌러 전체 내용을 확인하세요.</p>
           </div>
         </div>
-        <div className="split-stage">
-          <div className="petal-banner">
-            {[
-              { slug: "first-week", title: "집에 온 첫 주", src: "/banners/guide-home.jpg" },
-              { slug: "food", title: "사료를 바꿀 때", src: "/banners/guide-food.jpg" },
-              { slug: "outing", title: "첫 외출 전", src: "/banners/guide-outing.jpg" },
-            ].map((item) => (
-              <Link key={item.slug} className={`petal petal--${item.slug}`} to={`/guide/${item.slug}`}>
-                <img src={item.src} alt="" />
-                <span>{item.title}</span>
-              </Link>
-            ))}
-            <svg className="petal-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <line x1="50" y1="50" x2="50" y2="0" />
-              <line x1="50" y1="50" x2="100" y2="79" />
-              <line x1="50" y1="50" x2="0" y2="79" />
-            </svg>
-          </div>
+        <div className="philosophy-cards">
+          {content.philosophy.map((item, index) => (
+            <Link key={item.slug} to={`/philosophy/${item.slug}`} className="philosophy-card">
+              <span className="philosophy-card__num">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+              <em>자세히 보기</em>
+            </Link>
+          ))}
         </div>
       </section>
 

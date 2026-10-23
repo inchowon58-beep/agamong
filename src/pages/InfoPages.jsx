@@ -75,6 +75,40 @@ export function GuideDetail() {
   );
 }
 
+export function PhilosophyDetail() {
+  const { slug } = useParams();
+  const item = content.philosophy.find((entry) => entry.slug === slug);
+  usePageTitle(item?.title || "분양 안내");
+  if (!item) {
+    return (
+      <article className="page">
+        <PageHero kicker="PHILOSOPHY" title="안내를 찾지 못했습니다" />
+        <Link className="text-link" to="/">홈으로</Link>
+      </article>
+    );
+  }
+  return (
+    <article className="page">
+      <PageHero kicker="PHILOSOPHY" title={item.title} lead={item.summary} />
+      <div className="philosophy-prose">
+        {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      </div>
+      <div className="philosophy-more">
+        <p className="kicker">OTHER</p>
+        <div className="link-list">
+          {content.philosophy.filter((entry) => entry.slug !== slug).map((entry) => (
+            <Link key={entry.slug} to={`/philosophy/${entry.slug}`}>
+              <strong>{entry.title}</strong>
+              <span>{entry.summary}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+      <Link className="text-link" to="/">홈으로</Link>
+    </article>
+  );
+}
+
 export function Reviews({ overseas = false }) {
   usePageTitle(overseas ? "해외 상담" : "상담 이야기");
   if (overseas) {

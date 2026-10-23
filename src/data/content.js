@@ -16,6 +16,7 @@ export const content = {
     breedTitle: "품종만 모아서 보기",
     breedLead: "원하는 견종과 묘종만 따로 펼쳐 볼 수 있습니다.",
   },
+  philosophy: [],
   pages: {
     greeting: {
       path: "/about/greeting",

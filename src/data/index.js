@@ -19,10 +19,11 @@ function mergeGuides(baseGuides, extraGuides) {
   });
 }
 
-const { guides, qna, ...rest } = extra || {};
+const { guides, qna, philosophy, ...rest } = extra || {};
 const merged = merge(base, rest);
 merged.guides = mergeGuides(base.guides, guides);
 if (Array.isArray(qna) && qna.length >= 4) merged.qna = qna;
+if (Array.isArray(philosophy) && philosophy.length >= 5) merged.philosophy = philosophy;
 
 export const content = merged;
 

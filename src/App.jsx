@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Chrome } from "./components/Chrome.jsx";
 import { Home } from "./pages/Home.jsx";
 import { BreedIndex, PetDetail, PetList } from "./pages/PetPages.jsx";
-import { Consult, ContentPage, GuideDetail, GuideIndex, NotFound, Place, QnA, Reviews, SearchPage } from "./pages/InfoPages.jsx";
+import { Consult, ContentPage, GuideDetail, GuideIndex, NotFound, PhilosophyDetail, Place, QnA, Reviews, SearchPage } from "./pages/InfoPages.jsx";
 import { content } from "./data/index.js";
 
 export default function App() {
@@ -26,6 +26,7 @@ export default function App() {
         ))}
         <Route path="/guide" element={<GuideIndex />} />
         <Route path="/guide/:slug" element={<GuideDetail />} />
+        <Route path="/philosophy/:slug" element={<PhilosophyDetail />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/reviews/overseas" element={<Reviews overseas />} />
         <Route path="/qna" element={<QnA />} />
