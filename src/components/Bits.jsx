@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { NAV, PHONE, PHONE_TEL, content } from "../data/index.js";
+import { NAV, PHONE, content } from "../data/index.js";
 
 export function SafeImg({ src, alt, className }) {
   const [failed, setFailed] = useState(false);
@@ -91,19 +91,12 @@ export function PageHero({ kicker, title, lead }) {
   );
 }
 
-export function ConsultBand({ pet } = {}) {
-  const to = pet ? `/consult?pet=${pet}` : "/consult";
+export function ConsultBand() {
   return (
     <section className="consult-band">
-      <div>
-        <p className="kicker">CONSULT</p>
-        <h2>분양 가능한 아이는 전화로 확인합니다</h2>
-        <p>대표번호 {PHONE}. 방문이 필요하면 예약 후 장소를 안내합니다.</p>
-      </div>
-      <div className="consult-band__actions">
-        <a className="btn btn-dark" href={PHONE_TEL}>전화 상담</a>
-        <Link className="btn btn-line" to={to}>상담 남기기</Link>
-      </div>
+      <p className="kicker">CONSULT</p>
+      <h2>분양 가능한 아이는 전화로 확인합니다</h2>
+      <p>대표번호 {PHONE}. 방문이 필요하면 예약 후 장소를 안내합니다.</p>
     </section>
   );
 }

@@ -3,7 +3,25 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { BUSINESS, PHONE, PHONE_TEL, REGIONS, content, filterPets, getPet } from "../data/index.js";
 import { BannerSlot, ConsultBand, PageHero, SectionNav } from "../components/Bits.jsx";
 import { PetCard } from "../components/PetCard.jsx";
+import { PhilosophyProse } from "../components/PhilosophyProse.jsx";
 import { usePageTitle } from "../usePageTitle.js";
+import { pickRandomReviews } from "../utils/pickReviews.js";
+
+function ReviewsGrid() {
+  const pool = content.adoptionReviews?.length ? content.adoptionReviews : content.stories;
+  const [reviews] = useState(() => pickRandomReviews(pool, pool.length));
+  return (
+    <div className="story-grid story-grid--reviews">
+      {reviews.map((review) => (
+        <article key={`${review.title}-${review.meta || ""}`} className="review-card">
+          <h2>{review.title}</h2>
+          <p>{review.body}</p>
+          {review.meta ? <p className="review-card__meta">{review.meta}</p> : null}
+        </article>
+      ))}
+    </div>
+  );
+}
 
 export function ContentPage({ id }) {
   const page = content.pages[id];
@@ -90,9 +108,7 @@ export function PhilosophyDetail() {
   return (
     <article className="page">
       <PageHero kicker="PHILOSOPHY" title={item.title} lead={item.summary} />
-      <div className="philosophy-prose">
-        {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-      </div>
+      <PhilosophyProse paragraphs={item.body} />
       <div className="philosophy-more">
         <p className="kicker">OTHER</p>
         <div className="link-list">
@@ -110,7 +126,7 @@ export function PhilosophyDetail() {
 }
 
 export function Reviews({ overseas = false }) {
-  usePageTitle(overseas ? "해외 상담" : "상담 이야기");
+  usePageTitle(overseas ? "해외 상담" : "분양후기");
   if (overseas) {
     return (
       <section className="page">
@@ -131,15 +147,8 @@ export function Reviews({ overseas = false }) {
   }
   return (
     <section className="page">
-      <PageHero kicker="REVIEW" title="상담에서 자주 나오는 이야기" lead="가족 동의를 받은 실제 후기가 모이면 이 목록을 교체합니다. 지금은 상담 주제를 정리해 두었습니다." />
-      <div className="story-grid">
-        {content.stories.map((story) => (
-          <article key={story.title}>
-            <h2>{story.title}</h2>
-            <p>{story.body}</p>
-          </article>
-        ))}
-      </div>
+      <PageHero kicker="REVIEW" title="분양후기" lead="입양 가족의 후기입니다. 새로고침할 때마다 다른 후기가 보일 수 있습니다." />
+      <ReviewsGrid />
       <div className="banner-row">
         <BannerSlot id="story-1" label="후기 사진 자리 1" ratio="4 / 3" />
         <BannerSlot id="story-2" label="후기 사진 자리 2" ratio="4 / 3" />
@@ -184,7 +193,7 @@ export function Place() {
           </article>
         ))}
       </div>
-      <p className="prose">대표 {BUSINESS.owner} · 사업자등록번호 {BUSINESS.bizNo} · 허가번호 {BUSINESS.permitNo}</p>
+      <p className="prose">대표 {BUSINESS.owner}</p>
       <div className="section-gap">
         <BannerSlot id="place-map" label="전국 권역 지도" note="지도 이미지는 이후 제작" />
       </div>
@@ -227,7 +236,7 @@ export function Consult() {
   if (sent) {
     return (
       <section className="page">
-        <PageHero kicker="CONSULT" title="상담 내용을 이 브라우저에 남겼습니다" lead="이 화면은 개발용 저장입니다. 실제 연결은 대표번호 0505-464-1004로 해주세요." />
+        <PageHero kicker="CONSULT" title="상담 내용을 이 브라우저에 남겼습니다" lead={`이 화면은 개발용 저장입니다. 실제 연결은 대표번호 ${PHONE}로 해주세요.`} />
       </section>
     );
   }

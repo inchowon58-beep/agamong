@@ -1,18 +1,19 @@
 export const SITE_URL = "https://www.cafedaum.co.kr";
 
-export const PHONE = "0505-464-1004";
-export const PHONE_TEL = "tel:0505-464-1004";
+export const SITE_TITLE =
+  "아가몽 | 인천강아지분양 강아지무료분양 인천고양이분양 인천고양이무료분양";
+
+export const PHONE = "010-4075-5865";
+export const PHONE_TEL = "tel:01040755865";
 
 export const BUSINESS = {
   name: "아가몽",
   nameEn: "AGAMONG",
-  owner: "조춘원",
+  owner: "민동수",
   phone: PHONE,
-  bizNo: "411-88-00358",
-  permitNo: "3860000-037-2016-0013",
-  address: "전국 분양 데스크 · 방문 상담 예약제",
+  address: "인천 부평구 부흥로327번길 13 1층",
   addressDetail:
-    "서울·경기·인천·강원·충청·호남·영남·제주까지 같은 번호로 상담하고, 일정에 맞춰 안심 배송합니다. 방문이 필요한 경우에는 예약 후 상담 장소를 안내합니다.",
+    "인천 부평구 부흥로327번길 13 1층에서 예약 상담을 받습니다. 전국 권역 일정에 맞춰 안심 배송도 안내합니다.",
 };
 
 export const REGIONS = [
@@ -29,7 +30,7 @@ export const NAV = [
     label: "ABOUT",
     href: "/about/company",
     children: [
-      { href: "/about/greeting", title: "대표 인사말", desc: "대표 조춘원의 분양 원칙" },
+      { href: "/about/greeting", title: "대표 인사말", desc: "대표 민동수의 분양 원칙" },
       { href: "/about/company", title: "회사소개", desc: "전국을 한 데스크로 운영합니다" },
       { href: "/about/staff", title: "스텝소개", desc: "상담, 케어, 배송 역할" },
       { href: "/about/recruit", title: "채용정보", desc: "함께 일할 분을 찾습니다" },
@@ -76,8 +77,8 @@ export const NAV = [
 export const HEADER_NAV = [
   { href: "/puppies", label: "강아지분양", match: "/puppies" },
   { href: "/kittens", label: "고양이분양", match: "/kittens" },
-  { href: "/adopt/system", label: "입양절차", match: "/adopt" },
-  { href: "/guide", label: "이렇게지내요", match: "/guide" },
+  { href: "/", label: "아가몽분양은 이렇게", match: "/philosophy", hash: "philosophy-guide" },
+  { href: "/", label: "가족이 되신분들", match: "/families", hash: "adoption-reviews" },
 ];
 
 export const KEYWORDS = [

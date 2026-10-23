@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { FooterSeoLinks } from "./FooterSeoLinks.jsx";
 import { BUSINESS, HEADER_NAV, PHONE, PHONE_TEL } from "../data/index.js";
 
 export function Chrome({ children }) {
@@ -8,8 +9,16 @@ export function Chrome({ children }) {
 
   useEffect(() => {
     setOpen(false);
+    const hashId = location.hash?.replace(/^#/, "");
+    if (hashId) {
+      const target = document.getElementById(hashId);
+      if (target) {
+        requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+        return;
+      }
+    }
     window.scrollTo(0, 0);
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, location.hash]);
 
   return (
     <>
@@ -33,15 +42,27 @@ export function Chrome({ children }) {
             <span /><span /><span />
           </button>
           <nav className={open ? "nav-links is-open" : "nav-links"} aria-label="주요 메뉴">
-            {HEADER_NAV.map((item) => (
-              <NavLink
-                key={item.href}
-                to={item.href}
-                className={location.pathname.startsWith(item.match) ? "active" : undefined}
-              >
-                {item.label}
-              </NavLink>
-            ))}
+            {HEADER_NAV.map((item) => {
+              const to = item.hash ? { pathname: "/", hash: `#${item.hash}` } : item.href;
+              const active = item.hash
+                ? location.pathname === "/" && location.hash === `#${item.hash}`
+                : location.pathname.startsWith(item.match);
+              return (
+                <NavLink
+                  key={item.label}
+                  to={to}
+                  className={active ? "active" : undefined}
+                  onClick={(event) => {
+                    if (!item.hash || location.pathname !== "/") return;
+                    if (location.hash !== `#${item.hash}`) return;
+                    event.preventDefault();
+                    document.getElementById(item.hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  {item.label}
+                </NavLink>
+              );
+            })}
           </nav>
         </div>
       </header>
@@ -52,7 +73,8 @@ export function Chrome({ children }) {
         <div className="wrap">
           <p>© {new Date().getFullYear()} 아가몽 · {BUSINESS.nameEn}</p>
           <p>대표 {BUSINESS.owner} · <a href={PHONE_TEL}>{PHONE}</a></p>
-          <p>사업자등록번호 {BUSINESS.bizNo} · 허가번호 {BUSINESS.permitNo}</p>
+          <p className="site-footer__addr">{BUSINESS.address}</p>
+          <FooterSeoLinks />
         </div>
       </footer>
 

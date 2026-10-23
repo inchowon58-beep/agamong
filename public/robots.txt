@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.cafedaum.co.kr/sitemap-seo.xml
