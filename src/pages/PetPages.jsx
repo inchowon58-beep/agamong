@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import { breedsByType, content, filterPets, findBreed, getPet, imageUrl } from "../data/index.js";
 import { ConsultBand, PageHero, Pager, ReactCounts, SafeImg, SectionNav, reactions } from "../components/Bits.jsx";
 import { PetCard } from "../components/PetCard.jsx";
-import { pickLotteryPrize, ScratchLottery } from "../components/ScratchLottery.jsx";
 import { usePageTitle } from "../usePageTitle.js";
 
 const PAGE_SIZE = 12;
@@ -137,7 +136,6 @@ export function PetDetail() {
   const pet = getPet(id);
   const [shot, setShot] = useState(0);
   const [quote, setQuote] = useState(pickQuote);
-  const [lotteryPrize, setLotteryPrize] = useState(null);
   const [others, setOthers] = useState(() => (pet ? pickOthers(pet) : []));
   usePageTitle(pet ? `${pet.breed} ${pet.name}` : "안내");
 
@@ -180,10 +178,6 @@ export function PetDetail() {
             <ReactCounts likes={counts.likes} comments={counts.comments} labeled />
           </div>
           <div className="hero-actions">
-            <button type="button" className="btn btn-dark lottery-open" onClick={() => setLotteryPrize(pickLotteryPrize())}>
-              <span className="lottery-chip" aria-hidden="true" />
-              <span className="lottery-face">오늘의 이벤트 복권을 긁어 보세요. 클릭</span>
-            </button>
             <Link className="btn btn-line" to={pet.type === "kitten" ? "/kittens" : "/puppies"}>목록으로</Link>
           </div>
         </div>
@@ -234,7 +228,6 @@ export function PetDetail() {
           </div>
         </div>
       ) : null}
-      {lotteryPrize ? <ScratchLottery prize={lotteryPrize} onClose={() => setLotteryPrize(null)} /> : null}
     </section>
   );
 }

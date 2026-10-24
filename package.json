@@ -9,7 +9,8 @@
     "build:seo": "vite build && node scripts/generate-seo-sitemap.mjs && node scripts/prerender-seo.mjs",
     "preview": "vite preview",
     "generate": "node scripts/generate-copy.mjs",
-    "generate:seo-copy": "node scripts/generate-seo-copy.mjs"
+    "generate:seo-copy": "node scripts/generate-seo-copy.mjs",
+    "generate:naver-webdocs": "node scripts/generate-naver-webdocs.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
