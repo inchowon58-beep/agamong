@@ -5,6 +5,7 @@ export const SITE_TITLE =
 
 export const PHONE = "010-4075-5865";
 export const PHONE_TEL = "tel:+821040755865";
+export const KAKAO_CHANNEL_URL = "https://pf.kakao.com/_lWwxkG";
 
 export const BUSINESS = {
   name: "아가몽",
