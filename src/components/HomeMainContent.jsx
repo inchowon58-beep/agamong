@@ -9,8 +9,8 @@ import { HomeQuoteBand } from "../components/HomeQuoteBand.jsx";
 import { pickRandomReviews } from "../utils/pickReviews.js";
 
 const HERO_DOGS = [
-  { slug: "doodle", label: "골든두들" },
-  { slug: "whiteterrier", label: "화이트테리어" },
+  { slug: "golden-doodle", label: "골든두들" },
+  { slug: "westie", label: "화이트테리어" },
   { slug: "sheltie", label: "셔틀랜드쉽독" },
 ];
 
@@ -113,7 +113,7 @@ export function HomeMainContent({ embedded = false }) {
         <div className="breed-row">
           {dogBreeds.map((breed) => (
             <Link key={breed.slug} to={`/puppies/breed/${breed.slug}`}>
-              <img src={imageUrl(breed.folder, 1)} alt="" />
+              <img src={imageUrl(breed, 1)} alt="" />
               <strong>{breed.en}</strong>
               <span>{breed.ko}</span>
             </Link>
@@ -125,7 +125,7 @@ export function HomeMainContent({ embedded = false }) {
           </Link>
           {catBreeds.map((breed) => (
             <Link key={breed.slug} to={`/kittens/breed/${breed.slug}`}>
-              <img src={imageUrl(breed.folder, 1)} alt="" />
+              <img src={imageUrl(breed, 1)} alt="" />
               <strong>{breed.en}</strong>
               <span>{breed.ko}</span>
             </Link>

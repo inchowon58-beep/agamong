@@ -9,12 +9,15 @@ export const KAKAO_CHANNEL_URL = "https://pf.kakao.com/_lWwxkG";
 
 export const BUSINESS = {
   name: "아가몽",
+  legalName: "인천 강아지분양 아가몽",
   nameEn: "AGAMONG",
-  owner: "민동수",
+  owner: "백인혜",
   phone: PHONE,
-  address: "인천 부평구 부흥로327번길 13 1층",
+  address: "인천 부평구 부평동 399-24 1층",
+  businessNumber: "873-94-02012",
+  licenseNumber: "3540000-045-2025-0002",
   addressDetail:
-    "인천 부평구 부흥로327번길 13 1층에서 예약 상담을 받습니다. 전국 권역 일정에 맞춰 안심 배송도 안내합니다.",
+    "인천 부평구 부평동 399-24 1층에서 예약 상담을 받습니다. 전국 권역 일정에 맞춰 안심 배송도 안내합니다.",
 };
 
 export const REGIONS = [
@@ -31,7 +34,7 @@ export const NAV = [
     label: "ABOUT",
     href: "/about/company",
     children: [
-      { href: "/about/greeting", title: "대표 인사말", desc: "대표 민동수의 분양 원칙" },
+      { href: "/about/greeting", title: "대표 인사말", desc: "대표 백인혜의 분양 원칙" },
       { href: "/about/company", title: "회사소개", desc: "전국을 한 데스크로 운영합니다" },
       { href: "/about/staff", title: "스텝소개", desc: "상담, 케어, 배송 역할" },
       { href: "/about/recruit", title: "채용정보", desc: "함께 일할 분을 찾습니다" },

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "generate": "node scripts/generate-copy.mjs",
     "generate:seo-copy": "node scripts/generate-seo-copy.mjs",
-    "generate:naver-webdocs": "node scripts/generate-naver-webdocs.mjs"
+    "generate:naver-webdocs": "node scripts/generate-naver-webdocs.mjs",
+    "sync:dog-photos": "node scripts/sync-local-dog-photos.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",
